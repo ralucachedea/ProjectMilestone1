@@ -22,7 +22,7 @@ suna indecșilor de pe diagonala secundară trebuie să fie tot timpul egală cu
 
 '''
 x_turn = True
-matrix = [['x', '0', 'x'], ['x', 'x', 'x'], ['x', '0', '0']]
+matrix = [['x', '2', 'x'], ['x', '5', '6'], ['x', '0', '9']]
 game_on = True
 
 def matrix_print(matrix):
@@ -115,6 +115,7 @@ def win_validation(matrix, player):
     """
     diagonal_counter = 0
     diagonal_sec_counter = 0
+    column_counter = [0, 0, 0]
     for row_index in range(len(matrix)):
         line_counter = 0
         # main diagonal check
@@ -132,13 +133,17 @@ def win_validation(matrix, player):
                     if diagonal_sec_counter == 3:
                         print(f"User {player} has won, see secondary diagonal")
                         return True
+                # column check
+                column_counter[column_index] += 1
+                if column_counter[column_index] == 3:
+                    print(f"User {player} has won, see column {column_index}")
+                    return True
             else:
                 line_counter = 0
         # line check
         if line_counter == 3:
             print("User {} has won, see line {}".format(player, row_index))
             return True
-            # column check
 
     return False
 def check_available_positions(matrix):
@@ -153,10 +158,10 @@ if __name__ == "__main__":
     # users_turn()
     #user_input()
     # matrix_print(matrix)
-    #win_evaluation_result = win_validation(matrix, 'x')
-    #print(win_evaluation_result)
-    win_validation_res = check_available_positions(matrix)
-    print(win_validation_res)
+    win_evaluation_result = win_validation(matrix, 'x')
+    print(win_evaluation_result)
+    # win_validation_res = check_available_positions(matrix)
+    # print(win_validation_res)
 
 
 
