@@ -7,8 +7,22 @@
 # 7. check the matrix is full
 # 8. ask the user his next position. check if the position is free in matrix
 
+'''
+ai nevoie de o funcție pentru început
+dev check_win(matrix, player):
+care returnează un rezultat boolean
+o parcurgi cu 2 foruri
+for în for
+unul pentru linii și unul pentru coloane
+care determină dacă o matrice bidimensională are aceleași valori pe una dintre linii, coloane sau diagonală
+
+ce valori trebuie să aibă indecșii elementelor de pe diagonala principală a unei matrici? dar de pe cea secundară?
+indecșii elementelor de pe diagonala principală trebuie să fie egali
+suna indecșilor de pe diagonala secundară trebuie să fie tot timpul egală cu min(nr_linii, nr_coloane)
+
+'''
 x_turn = True
-matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+matrix = [['x', '0', 'x'], ['x', 'x', 'x'], ['x', '0', '0']]
 game_on = True
 
 def matrix_print(matrix):
@@ -39,6 +53,8 @@ def users_turn():
             matrix[int(user_row)][int(user_column)] = '0'
         x_turn = not x_turn
         matrix_print(matrix)
+
+
 def input_validation(user_row,user_column,matrix):
     """
     the function checks the user's inputs
@@ -87,14 +103,60 @@ def input_validation(user_row,user_column,matrix):
         print("The position is already taken!! Please add another number")
         return False
     return True
-#def win_validation()
+
+
+def win_validation(matrix, player):
+    """
+    The function checks if the user wins the game
+    The function checks if all positions were occuped and the game is over
+    :param matrix:
+    :param player:
+    :return: True if all position are occuped with the same mark
+    """
+    diagonal_counter = 0
+    diagonal_sec_counter = 0
+    for row_index in range(len(matrix)):
+        line_counter = 0
+        # main diagonal check
+        if matrix[row_index][row_index] == player:
+            diagonal_counter += 1
+        if diagonal_counter == 3:
+            print("User {} has won, see diagonal".format(player))
+            return True
+        for column_index in range(len(matrix)):
+            if matrix[row_index][column_index] == player:
+                line_counter += 1
+                # secondary diagonal check
+                if (row_index + column_index) == 2:
+                    diagonal_sec_counter += 1
+                    if diagonal_sec_counter == 3:
+                        print(f"User {player} has won, see secondary diagonal")
+                        return True
+            else:
+                line_counter = 0
+        # line check
+        if line_counter == 3:
+            print("User {} has won, see line {}".format(player, row_index))
+            return True
+            # column check
+
+    return False
+def check_available_positions(matrix):
+    for row_index in range(len(matrix)):
+        for column_index in range(len(matrix)):
+            if matrix[row_index][column_index]!='x' and matrix[row_index][column_index]!='0':
+                return False
+    return True
 
 if __name__ == "__main__":
     matrix_print(matrix)
-    users_turn()
+    # users_turn()
     #user_input()
-    matrix_print(matrix)
-
+    # matrix_print(matrix)
+    #win_evaluation_result = win_validation(matrix, 'x')
+    #print(win_evaluation_result)
+    win_validation_res = check_available_positions(matrix)
+    print(win_validation_res)
 
 
 
