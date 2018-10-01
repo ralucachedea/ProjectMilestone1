@@ -32,27 +32,22 @@ def matrix_print(matrix):
         print()
 
 
-def users_turn():
-    global x_turn
-    global game_on
+def users_turn(x_turn):
 
-    while game_on:
-        if x_turn:
-            print("It's X's turn: ")
-        else:
-            print("It's 0's turn: ")
-        validation_result = False
-        while not validation_result:
-            user_row = input('Add the row number: ')
-            user_column = input('Add the column number: ')
-            validation_result = input_validation(user_row,user_column,matrix)
+    if x_turn:
+        print("It's X's turn: ")
+    else:
+        print("It's 0's turn: ")
+    validation_result = False
+    while not validation_result:
+        user_row = input('Add the row number: ')
+        user_column = input('Add the column number: ')
+        validation_result = input_validation(user_row,user_column,matrix)
 
-        if x_turn:
-            matrix[int(user_row)][int(user_column)] = 'X'
-        else:
-            matrix[int(user_row)][int(user_column)] = '0'
-        x_turn = not x_turn
-        matrix_print(matrix)
+    if x_turn:
+        matrix[int(user_row)][int(user_column)] = 'X'
+    else:
+        matrix[int(user_row)][int(user_column)] = '0'
 
 
 def input_validation(user_row,user_column,matrix):
@@ -147,21 +142,24 @@ def win_validation(matrix, player):
 
     return False
 
+
 def check_available_positions(matrix):
     for row_index in range(len(matrix)):
         for column_index in range(len(matrix)):
-            if matrix[row_index][column_index]!='x' and matrix[row_index][column_index]!='0':
+            if matrix[row_index][column_index] != 'X' and matrix[row_index][column_index] != '0':
                 return False
+    print("Game over, there are no more available positions!")
     return True
 
 if __name__ == "__main__":
-    game_over = False
-    while not game_over:
+    while game_on:
         matrix_print(matrix)
-        users_turn()
-        game_over = win_validation(matrix, x_turn)
-        if not game_over:
-           game_over = check_available_positions(matrix)
+        users_turn(x_turn)
+        player = 'X' if x_turn else '0'
+        game_on = not win_validation(matrix, player)
+        if game_on:
+           game_on = not check_available_positions(matrix)
+        x_turn = not x_turn
 
 
 
