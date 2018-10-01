@@ -22,7 +22,7 @@ suna indecșilor de pe diagonala secundară trebuie să fie tot timpul egală cu
 
 '''
 x_turn = True
-matrix = [['x', '2', 'x'], ['x', '5', '6'], ['x', '0', '9']]
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 game_on = True
 
 def matrix_print(matrix):
@@ -111,7 +111,7 @@ def win_validation(matrix, player):
     The function checks if all positions were occuped and the game is over
     :param matrix:
     :param player:
-    :return: True if all position are occuped with the same mark
+    :return: True if all position are occupied with the same mark
     """
     diagonal_counter = 0
     diagonal_sec_counter = 0
@@ -146,6 +146,7 @@ def win_validation(matrix, player):
             return True
 
     return False
+
 def check_available_positions(matrix):
     for row_index in range(len(matrix)):
         for column_index in range(len(matrix)):
@@ -154,14 +155,14 @@ def check_available_positions(matrix):
     return True
 
 if __name__ == "__main__":
-    matrix_print(matrix)
-    # users_turn()
-    #user_input()
-    # matrix_print(matrix)
-    win_evaluation_result = win_validation(matrix, 'x')
-    print(win_evaluation_result)
-    # win_validation_res = check_available_positions(matrix)
-    # print(win_validation_res)
+    game_over = False
+    while not game_over:
+        matrix_print(matrix)
+        users_turn()
+        game_over = win_validation(matrix, x_turn)
+        if not game_over:
+           game_over = check_available_positions(matrix)
+
 
 
 
